@@ -1,0 +1,93 @@
+name: '📦 Build'
+
+on:
+  workflow_dispatch:
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: 'ngcicd/.node-version'
+
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        with:
+          version: 8
+          run_install: false
+
+
+      - name: run pnpm insatll
+        working-directory: ngcicd
+        run: |
+          pnpm install
+
+
+      - name: build
+        working-directory: ngcicd
+        run: |
+          ng build
+
+      
+      - name: Save current project as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: ngcicd/dist
+          if-no-files-found: error
+          retention-days: 1
+
+      
+
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: 'ngcicd/.node-version'
+
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        with:
+          version: 8
+          run_install: false
+
+
+      - name: run pnpm insatll
+        working-directory: ngcicd
+        run: |
+          pnpm install
+
+
+      - name: build
+        working-directory: ngcicd
+        run: |
+          ng build
+
+      
+      - name: Save current project as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: ngcicd/dist
+          if-no-files-found: error
+          retention-days: 1
+
+      
