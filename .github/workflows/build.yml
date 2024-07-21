@@ -1,7 +1,9 @@
-name: '📦 Build'
+name: '📦🚀 Build & Deploy '
 
 on:
   workflow_dispatch:
+
+  push:
 
 
 jobs:
@@ -85,7 +87,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version-file: 'ngcicd/.node-version'
+          node-version: 18.20
 
 
       - uses: pnpm/action-setup@v2
